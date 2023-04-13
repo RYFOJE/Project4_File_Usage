@@ -9,7 +9,7 @@ int main() {
 
 	std::filesystem::path path(s);
 
-	std::map<std::string, unsigned long long int> fileMap;
+	std::map<std::string, FileType> fileMap;
 
 	get_files(path, fileMap);
 	print_map(fileMap);
