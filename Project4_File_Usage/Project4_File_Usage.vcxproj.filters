@@ -21,9 +21,15 @@
     <ClCompile Include="fs_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cmd_functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fs_function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

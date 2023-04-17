@@ -17,11 +17,9 @@ int main() {
 	FileVec fileVec;
 	map_to_vec(fileMap, fileVec);
 
-	tempPrintVec(fileVec);
+	//tempPrintVec(fileVec);
 
+	//std::reverse(fileVec.begin(), fileVec.end());
 
-	//print_map(fileMap);
-	
-
-
+	print_files(fileVec);
 }

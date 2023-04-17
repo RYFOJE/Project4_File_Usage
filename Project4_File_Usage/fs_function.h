@@ -23,7 +23,7 @@ typedef std::pair<std::string, FileType> FilePair;
 typedef std::vector<FilePair> FileVec;
 
 void get_files(std::filesystem::path path, FileMap& fileMap);
-void print_map(FileMap& fileMap);
+void print_files(FileVec& fileVec);
 void get_files(std::filesystem::path path, FileMap& fileMap, std::string regexStr);
 void map_to_vec(FileMap& from, std::vector<FilePair>& to);
 void tempPrintVec(FileVec vec);

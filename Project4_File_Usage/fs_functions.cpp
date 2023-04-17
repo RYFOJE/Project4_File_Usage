@@ -84,7 +84,7 @@ std::string format_int(unsigned long long int number) {
 
 // Function that will calculate how many digits in length an int is
 
-unsigned int find_longest_filetype(FileMap& fileMap ) {
+unsigned int find_longest_filetype(FileMap& fileMap) {
 
 	unsigned int size = 0;
 	FileMap::iterator it = fileMap.begin();
@@ -103,15 +103,15 @@ unsigned int find_longest_filetype(FileMap& fileMap ) {
 	return size;
 }
 
-unsigned int count_total_files(FileMap& fileMap) {
+unsigned int count_total_files(FileVec& fileVec) {
 
-	FileMap::iterator it;
+	FileVec::iterator it;
 
-	it = fileMap.begin();
+	it = fileVec.begin();
 
 	unsigned int count = 0;
 
-	for (; it != fileMap.end(); it++) {
+	for (; it != fileVec.end(); it++) {
 
 		count += it->second.get_count();
 
@@ -121,13 +121,13 @@ unsigned int count_total_files(FileMap& fileMap) {
 
 }
 
-unsigned int get_total_size(FileMap& fileMap) {
+unsigned int get_total_size(FileVec& fileVec) {
 
 	unsigned int runningCount = 0;
 
-	FileMap::iterator it = fileMap.begin();
+	FileVec::iterator it = fileVec.begin();
 
-	for (; it != fileMap.end(); it++) {
+	for (; it != fileVec.end(); it++) {
 
 		runningCount += it->second.get_total_bytes();
 
@@ -191,9 +191,6 @@ void map_to_vec(FileMap &from, std::vector<FilePair> &to) {
 	std::copy(from.begin(), from.end(),
 		std::back_inserter<FileVec>(to));
 
-	// Sort the pairs
-	std::sort(to.begin(), to.end(), fileComparator);
-
 }
 
 
@@ -210,20 +207,20 @@ void tempPrintVec(FileVec vec) {
 }
 
 
-void print_map(FileMap& fileMap) {
+void print_files(FileVec& fileVec) {
 
 	const unsigned int TOTAL_PADDING = 5;
 
-	FileMap::iterator it = fileMap.begin();
+	FileVec::iterator it = fileVec.begin();
 	unsigned int fileTotal = 0;
 	unsigned long long int totalSize = 0;
 
 	unsigned int paddingExtension = 0;
 	unsigned int paddingCount = 0;
-	unsigned int paddingSize = format_int(get_total_size(fileMap)).size();
+	unsigned int paddingSize = format_int(get_total_size(fileVec)).size();
 
-	// Iterate through fileMap and find the longest of values
-	for (; it != fileMap.end(); it++) {
+	// Iterate through fileVec and find the longest of values
+	for (; it != fileVec.end(); it++) {
 
 		unsigned int countDigitCount = calculate_length(it->second.get_count());
 
@@ -234,10 +231,10 @@ void print_map(FileMap& fileMap) {
 
 	}
 
-	it = fileMap.begin();
+	it = fileVec.begin();
 
 	// Find the size of the largest extension string
-	for (; it != fileMap.end(); it++) {
+	for (; it != fileVec.end(); it++) {
 
 		if (paddingExtension < it->first.size()) {
 			paddingExtension = it->first.size();
@@ -249,7 +246,7 @@ void print_map(FileMap& fileMap) {
 	paddingCount += TOTAL_PADDING;
 	paddingSize += TOTAL_PADDING;
 
-	it = fileMap.begin();
+	it = fileVec.begin();
 
 	// Print the header
 	std::cout << std::setw(paddingExtension) << "Ext";
@@ -258,7 +255,7 @@ void print_map(FileMap& fileMap) {
 	std::cout << std::endl << std::endl;
 
 	// Iterate throughout the map
-	for (; it != fileMap.end(); it++) {
+	for (; it != fileVec.end(); it++) {
 
 		fileTotal += it->second.get_count();
 		totalSize += it->second.get_total_bytes();
@@ -270,8 +267,8 @@ void print_map(FileMap& fileMap) {
 	}
 
 	std::cout << std::endl;
-	std::cout << std::setw(paddingExtension) << fileMap.size();
-	std::cout << std::setw(paddingCount) << count_total_files(fileMap);
-	std::cout << std::setw(paddingSize) << format_int(get_total_size(fileMap));
+	std::cout << std::setw(paddingExtension) << fileVec.size();
+	std::cout << std::setw(paddingCount) << count_total_files(fileVec);
+	std::cout << std::setw(paddingSize) << format_int(get_total_size(fileVec));
 
 }
