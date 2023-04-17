@@ -27,3 +27,4 @@ void print_files(FileVec& fileVec);
 void get_files(std::filesystem::path path, FileMap& fileMap, std::string regexStr);
 void map_to_vec(FileMap& from, std::vector<FilePair>& to);
 void tempPrintVec(FileVec vec);
+void sort_files(FileVec &vec);

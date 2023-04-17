@@ -75,10 +75,7 @@ std::string format_int(unsigned long long int number) {
 	std::reverse(newStr.begin(), newStr.end());
 
 	return newStr;
-
 }
-
-
 
 // Functions
 
@@ -92,7 +89,7 @@ unsigned int find_longest_filetype(FileMap& fileMap) {
 	// Iterate throughout the map containing all filetypes
 	for (; it != fileMap.end(); it++) {
 
-		unsigned int currSize = it->first.length();
+		size_t currSize = it->first.length();
 
 		if (currSize > size) {
 			size = currSize;
@@ -121,9 +118,9 @@ unsigned int count_total_files(FileVec& fileVec) {
 
 }
 
-unsigned int get_total_size(FileVec& fileVec) {
+unsigned long long int get_total_size(FileVec& fileVec) {
 
-	unsigned int runningCount = 0;
+	unsigned long long int runningCount = 0;
 
 	FileVec::iterator it = fileVec.begin();
 
@@ -183,7 +180,6 @@ void get_files(std::filesystem::path path, FileMap& fileMap, std::string regexSt
 	}
 }
 
-
 void map_to_vec(FileMap &from, std::vector<FilePair> &to) {
 	
 	// Got help from https://www.techiedelight.com/sort-map-values-cpp/
@@ -192,7 +188,6 @@ void map_to_vec(FileMap &from, std::vector<FilePair> &to) {
 		std::back_inserter<FileVec>(to));
 
 }
-
 
 void tempPrintVec(FileVec vec) {
 
@@ -206,7 +201,21 @@ void tempPrintVec(FileVec vec) {
 
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="vec"></param>
+void sort_files(FileVec &vec) {
 
+	std::sort(vec.begin(), vec.end(), fileComparator);
+
+}
+
+/// <summary>
+/// Prints out all the files in the vector in the order that they have been added to the vector
+/// </summary>
+/// <param name="fileVec">A vector containing pairs of file extensions and File classes that represents all the information
+/// associated to the file type</param>
 void print_files(FileVec& fileVec) {
 
 	const unsigned int TOTAL_PADDING = 5;

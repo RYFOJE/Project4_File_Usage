@@ -2,24 +2,43 @@
 #include <string>
 #include <map>
 #include "fs_function.h"
+#include "cmd_functions.h"
+#include "general_functions.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
-	std::string s = "C:\\School\\2023W\\INFO-1156-04\\Projects\\Project4_File_Usage\\Project4_File_Usage\\Temp";
+	CMDArguments args(argc, argv);
+	
+	if (args.isHelp) {
+		print_help();
+		return EXIT_SUCCESS;
+	}
 
-	std::filesystem::path path(s);
-
+	std::filesystem::path path(args.path);
 	std::map<std::string, FileType> fileMap;
 
-	get_files(path, fileMap);
-	//get_files(path, fileMap, "\.(docx|xlsx)");
+	// Search with regex
+	if (args.isRegex) {
+		get_files(path, fileMap, args.regexString);
+	}
 
+	// Search without regex
+	else {
+		get_files(path, fileMap);
+	}
+
+	// Convert from map to vector so it is easy to sort and manipulate
 	FileVec fileVec;
 	map_to_vec(fileMap, fileVec);
 
-	//tempPrintVec(fileVec);
+	if (args.isSortSize) {
+		sort_files(fileVec);
+	}
 
-	//std::reverse(fileVec.begin(), fileVec.end());
+	if (args.isReversed) {
+		std::reverse(fileVec.begin(), fileVec.end());
+	}
 
 	print_files(fileVec);
+	
 }
