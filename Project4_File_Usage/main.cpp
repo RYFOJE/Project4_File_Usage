@@ -12,6 +12,16 @@ int main() {
 	std::map<std::string, FileType> fileMap;
 
 	get_files(path, fileMap);
-	print_map(fileMap);
+	//get_files(path, fileMap, "\.(docx|xlsx)");
+
+	FileVec fileVec;
+	map_to_vec(fileMap, fileVec);
+
+	tempPrintVec(fileVec);
+
+
+	//print_map(fileMap);
+	
+
 
 }
