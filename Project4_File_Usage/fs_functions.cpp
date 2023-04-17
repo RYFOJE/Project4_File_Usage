@@ -189,18 +189,6 @@ void map_to_vec(FileMap &from, std::vector<FilePair> &to) {
 
 }
 
-void tempPrintVec(FileVec vec) {
-
-	FileVec::iterator it = vec.begin();
-
-	for (; it != vec.end(); it++) {
-
-		std::cout << it->second.get_total_bytes() << std::endl;
-
-	}
-
-}
-
 /// <summary>
 /// 
 /// </summary>
