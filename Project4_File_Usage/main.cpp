@@ -1,3 +1,13 @@
+///
+/// Project 4 File Usage
+/// 
+/// Author:		Ryan Jennings
+/// 
+/// Purpose:	This program will take a directory and find the file usage of all the files in the directory and its subdirectories.
+/// 
+/// Date:		2023-04-18 (Added documentation)
+/// 
+
 #include <filesystem>
 #include <string>
 #include <map>

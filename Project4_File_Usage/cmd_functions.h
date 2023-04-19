@@ -8,7 +8,6 @@ typedef std::vector <std::string> ArgsVec;
 class CMDArguments {
 public:
 	CMDArguments(int argc, char* argv[]);
-	void printSelf();
 
 	// All the switches
 	bool isRegex = false;

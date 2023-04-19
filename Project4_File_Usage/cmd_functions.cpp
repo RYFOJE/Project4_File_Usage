@@ -1,9 +1,23 @@
+///
+///	Author:		Ryan Jennings (r_jennings118029@fanshaweonline.ca)
+/// 
+/// Purpose:	This file contains all the functions to parse cmd arguments
+/// 
+/// Date:		2023-04-18 (Added documentation)
+/// 
+
+
 #include <regex>
 #include <filesystem>
 #include <iostream>
 
 #include "cmd_functions.h"
 
+/// <summary>
+/// This will find if the str is a valid path
+/// </summary>
+/// <param name="str">The string to be converted to a filepath</param>
+/// <returns>If the path is valid or not</returns>
 bool is_valid_path(std::string str) {
 
 	std::filesystem::path path(str);
@@ -30,6 +44,14 @@ CMDArguments::CMDArguments(int argc, char* argv[]) {
 
 }
 
+
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="argc"></param>
+/// <param name="argv"></param>
+/// <returns></returns>
 ArgsVec CMDArguments::cmd_to_vector(int argc, char* argv[]) {
 
 	ArgsVec args;
@@ -42,6 +64,11 @@ ArgsVec CMDArguments::cmd_to_vector(int argc, char* argv[]) {
 	return args;
 }
 
+
+/// <summary>
+/// This will find if the user has called the -x switch, if they have, it will return true, otherwise it will return false
+/// </summary>
+/// <returns>A boolean value representing if the user has called -x</returns>
 bool CMDArguments::find_regex() {
 
 	ArgsVec::iterator it = std::find(argsVec.begin(), argsVec.end(), "-x");
@@ -51,6 +78,11 @@ bool CMDArguments::find_regex() {
 
 }
 
+
+/// <summary>
+/// This will find if the user has called the -h switch or --help, if they have, it will return true, otherwise it will return false
+/// </summary>
+/// <returns>A boolean value representing if the user has called -h or --help</returns>
 bool CMDArguments::find_help() {
 
 	ArgsVec::iterator it = std::find(argsVec.begin(), argsVec.end(), "-h");
@@ -65,6 +97,11 @@ bool CMDArguments::find_help() {
 
 }
 
+
+/// <summary>
+/// This will find if the user has called the -s switch, if they have, it will return true, otherwise it will return false
+/// </summary>
+/// <returns>A boolean value representing if the user has called -s</returns>
 bool CMDArguments::find_sort_size() {
 
 	ArgsVec::iterator it = std::find(argsVec.begin(), argsVec.end(), "-s");
@@ -73,6 +110,11 @@ bool CMDArguments::find_sort_size() {
 
 }
 
+
+/// <summary>
+/// This will find if the user has called the -r switch, if they have, it will return true, otherwise it will return false
+/// </summary>
+/// <returns>A boolean value representing if the user has called -r</returns>
 bool CMDArguments::find_reversed() {
 
 	ArgsVec::iterator it = std::find(argsVec.begin(), argsVec.end(), "-r");
@@ -81,6 +123,14 @@ bool CMDArguments::find_reversed() {
 
 }
 
+
+/// <summary>
+/// This will find the regex string that the user has entered, it works by iterating through all the arguments until the -x
+/// switch is found. Then it will return the next argument, which should be the regex string if none is found, it will return an empty string
+/// 
+/// A better implementation should throw an error if the user has not entered a regex string
+/// </summary>
+/// <returns>A string corresponding to the regex to search</returns>
 std::string CMDArguments::find_regex_string() {
 
 	ArgsVec::iterator it = std::find(argsVec.begin(), argsVec.end(), "-x");
@@ -96,6 +146,12 @@ std::string CMDArguments::find_regex_string() {
 	return *it;
 }
 
+
+/// <summary>
+/// This function will find the file path that the user has entered, it works by iterating through all the arguments until a valid path is found
+/// if none is found, it will return the path to the CWD
+/// </summary>
+/// <returns>A path representing where the program will calculate the file extension size</returns>
 std::filesystem::path CMDArguments::find_file_path() {
 
 	// Try to find a valid file path
@@ -110,6 +166,13 @@ std::filesystem::path CMDArguments::find_file_path() {
 
 }
 
+
+/// <summary>
+/// This function will check to see if the user has used the -sr or -rs switches
+/// this is a bad implementation, but I do not have the time to properly implement this
+/// 
+/// sorry
+/// </summary>
 void CMDArguments::find_sr_rs() {
 
 	// I know this is bad code, but I do not ahve the time to properly implement the search for switches
@@ -130,15 +193,4 @@ void CMDArguments::find_sr_rs() {
 		isReversed = true;
 		return;
 	}
-}
-
-void CMDArguments::printSelf() {
-
-	std::cout << "is regex: " << isRegex << std::endl;
-	std::cout << "is help: " << isHelp << std::endl;
-	std::cout << "is sort size: " << isSortSize << std::endl;
-	std::cout << "is reversed: " << isReversed << std::endl;
-	std::cout << "path to check: " << path.string() << std::endl;
-	std::cout << "regex string: " << regexString << std::endl << std::endl;
-
 }

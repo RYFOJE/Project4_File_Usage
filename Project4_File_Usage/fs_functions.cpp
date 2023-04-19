@@ -1,3 +1,13 @@
+///
+/// Author:		Ryan Jennings
+/// 
+/// Purpose:	This file contains all the functions that are used to calculate the file usage of a given directory
+///				and its subdirectories. This file also contains the FileType class which is used to store the
+///				information about a given file type.
+/// 
+/// Date:		2023-04-18 (Added documentation)
+/// 
+
 #include <filesystem>
 #include <string>
 #include <map>
@@ -10,17 +20,36 @@ int minimumPadding = 4;
 
 // CLASS DECLARATIONS
 
+
+/// <summary>
+/// The default constructor for the FileType class
+/// </summary>
 FileType::FileType() : count(0), totalBytes(0) {}
 
+
+/// <summary>
+/// This will add a file to the current file type
+/// </summary>
+/// <param name="size"></param>
 void FileType::add_file(unsigned long long int size) {
 	count++;
 	totalBytes += size;
 };
 
+
+/// <summary>
+/// This will return the total amount of files associated to the FileType
+/// </summary>
+/// <returns>Total amount of files</returns>
 unsigned int FileType::get_count() const {
 	return count;
 };
 
+
+/// <summary>
+/// This will return the total amount of bytes associated to the FileType
+/// </summary>
+/// <returns>Total amount of bytes</returns>
 unsigned long long int FileType::get_total_bytes() const {
 	return totalBytes;
 }
@@ -28,10 +57,24 @@ unsigned long long int FileType::get_total_bytes() const {
 // HELPER FUNCTIONS
 
 // This custom comparator will be used to compare two map values
+
+
+/// <summary>
+/// This custom comparator is used to see what file is larger than the other
+/// </summary>
+/// <param name="a">Left side</param>
+/// <param name="b">Right Side</param>
+/// <returns>True if larger, flase if not</returns>
 bool fileComparator(const std::pair<std::string, FileType>& a, const std::pair<std::string, FileType>& b) {
 	return a.second.get_total_bytes() < b.second.get_total_bytes();
 }
 
+
+/// <summary>
+/// This function will accept an integer and calculate the length of a number.
+/// </summary>
+/// <param name="num">The integer to be calculated</param>
+/// <returns>The total numbers in an integer</returns>
 unsigned int calculate_length(unsigned int num) {
 
 	unsigned int length = 0;
@@ -43,6 +86,12 @@ unsigned int calculate_length(unsigned int num) {
 	return length;
 }
 
+
+/// <summary>
+/// This function will accept an integer and calculate the length of a number.
+/// </summary>
+/// <param name="num">The integer to be calculated</param>
+/// <returns>The total numbers in an integer</returns>
 unsigned int calculate_length(unsigned long long int num) {
 
 	unsigned int length = 0;
@@ -54,6 +103,12 @@ unsigned int calculate_length(unsigned long long int num) {
 	return length;
 }
 
+
+/// <summary>
+/// This will format an int with a thousands seperator.
+/// </summary>
+/// <param name="number">The integer to be formatted</param>
+/// <returns>The formatted integer as a string</returns>
 std::string format_int(unsigned long long int number) {
 
 	std::string tmpStr = std::to_string(number);
@@ -79,8 +134,12 @@ std::string format_int(unsigned long long int number) {
 
 // Functions
 
-// Function that will calculate how many digits in length an int is
 
+/// <summary>
+/// This will find the longest string length of a filetype in a given FileMap
+/// </summary>
+/// <param name="fileMap">The filemap that will be searched</param>
+/// <returns>The total count of characters of the longest extension</returns>
 unsigned int find_longest_filetype(FileMap& fileMap) {
 
 	unsigned int size = 0;
@@ -100,6 +159,11 @@ unsigned int find_longest_filetype(FileMap& fileMap) {
 	return size;
 }
 
+/// <summary>
+/// This function will sum the total count of all the files in a given FileVec.
+/// </summary>
+/// <param name="fileVec">The fileVec that will be counted</param>
+/// <returns>the total count of files</returns>
 unsigned int count_total_files(FileVec& fileVec) {
 
 	FileVec::iterator it;
@@ -118,6 +182,11 @@ unsigned int count_total_files(FileVec& fileVec) {
 
 }
 
+/// <summary>
+/// This function will sum the total values of all the files in a FileVec.
+/// </summary>
+/// <param name="fileVec">The file vector that will be calculated</param>
+/// <returns>The total size of all the files in the fileVec</returns>
 unsigned long long int get_total_size(FileVec& fileVec) {
 
 	unsigned long long int runningCount = 0;
@@ -134,6 +203,11 @@ unsigned long long int get_total_size(FileVec& fileVec) {
 
 }
 
+/// <summary>
+/// This get_file function will add files that are in the given path recusively
+/// </summary>
+/// <param name="path">The file path used to find all recursive files</param>
+/// <param name="fileMap">The filemap used to store the information pertaining to the files</param>
 void get_files(std::filesystem::path path, FileMap& fileMap) {
 
 	fs::recursive_directory_iterator dirIterator(path);
@@ -153,6 +227,13 @@ void get_files(std::filesystem::path path, FileMap& fileMap) {
 	}
 }
 
+/// <summary>
+/// This get_file function will take in a regex string and will only add files that match the regex to the map
+/// from the given path recursively
+/// </summary>
+/// <param name="path">The file path used to find all recursive files</param>
+/// <param name="fileMap">The filemap used to store the information pertaining to the files</param>
+/// <param name="regexStr">The regex match string used to test if the files are valid</param>
 void get_files(std::filesystem::path path, FileMap& fileMap, std::string regexStr) {
 
 	fs::recursive_directory_iterator dirIterator(path);
@@ -180,6 +261,11 @@ void get_files(std::filesystem::path path, FileMap& fileMap, std::string regexSt
 	}
 }
 
+/// <summary>
+/// Function that will copy all the values from the map to a vector as pairs
+/// </summary>
+/// <param name="from">The Map that will be use as the source</param>
+/// <param name="to">The Vector that will hold all File Pairs</param>
 void map_to_vec(FileMap &from, std::vector<FilePair> &to) {
 	
 	// Got help from https://www.techiedelight.com/sort-map-values-cpp/
